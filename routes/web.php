@@ -38,5 +38,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
 Route::middleware(['auth', 'role:mechanic'])->prefix('mechanic')->as('mechanic.')->group(function() {
     Route::get('/', [\App\Http\Controllers\Mechanic\PageController::class, 'index'])->name('dashboard');
 
-    Route::get('/tool/data', [\App\Http\Controllers\Mechanic\PageController::class, 'data'])->name('tool.data');
+    Route::get('/tool', [\App\Http\Controllers\Mechanic\ToolController::class, 'index'])->name('tool.index');
+    Route::get('/tool/data', [\App\Http\Controllers\Mechanic\ToolController::class, 'data'])->name('tool.data');
+    Route::get('/tool/{tool}', [\App\Http\Controllers\Mechanic\ToolController::class, 'show'])->name('tool.show');
+    Route::post('/tool/{tool}/order', [\App\Http\Controllers\Mechanic\ToolController::class, 'order'])->name('tool.order');
 });

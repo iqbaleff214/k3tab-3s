@@ -16,13 +16,4 @@ class PageController extends Controller
             'title' => 'Dashboard'
         ]);
     }
-
-    public function data(Request $request): JsonResponse
-    {
-        $data = Tool::where('equipment_number', '!=', null);
-        if ($request->get('q')) {
-            $data = $data->where('description', 'like', "%" . $request->get('q') . "%")->orWhere('equipment_number', 'like', "%" . $request->get('q') . "%");
-        }
-        return response()->json($data->paginate(24));
-    }
 }

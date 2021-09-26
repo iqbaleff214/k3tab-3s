@@ -4,6 +4,7 @@ import 'bootstrap';
 import 'datatables.net-responsive-bs';
 import 'datatables.net-bs4';
 import 'admin-lte';
+import select2 from 'select2';
 import Swal from 'sweetalert2';
 
 global.Popper = require('popper.js').default;
@@ -11,7 +12,7 @@ global.$ = global.jQuery = $;
 
 $(function() {
 
-    // $('.select2').select2();
+    $('.select2').select2();
     bsCustomFileInput.init()
 
 })

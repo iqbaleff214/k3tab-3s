@@ -30,7 +30,8 @@ class Sidebar extends Component
                 break;
             case 'MECHANIC':
                 $menus = [
-                    'mechanic.dashboard' => ['Dashboard', 'fas fa-home']
+                    'mechanic.dashboard' => ['Dashboard', 'fas fa-home'],
+                    'mechanic.tool.index' => ['Tools', 'fas fa-tools', 'mechanic.tool.*'],
                 ];
         }
 
