@@ -28,6 +28,10 @@ class Sidebar extends Component
                     'admin.user.index' => ['Users', 'fas fa-users', 'admin.user.*'],
                 ];
                 break;
+            case 'MECHANIC':
+                $menus = [
+                    'mechanic.dashboard' => ['Dashboard', 'fas fa-home']
+                ];
         }
 
         $this->menus = $menus;

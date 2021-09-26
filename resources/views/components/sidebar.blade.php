@@ -11,7 +11,7 @@
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="https://ui-avatars.com/api/?size=512&background=random&name={{ auth()->user()->name }}" class="img-circle elevation-2 mt-1" alt="User Image">
+                <img src="https://ui-avatars.com/api/?size=512&background=ffc107&name={{ auth()->user()->name }}" class="img-circle elevation-2 mt-1" alt="User Image">
             </div>
             <div class="info py-0 my-0">
                 <a href="#" class="d-block font-weight-bold">{{ auth()->user()->name }}</a>
@@ -33,31 +33,6 @@
                     </a>
                 </li>
                 @endforeach
-{{--                <li class="nav-header">EXAMPLES</li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a href="#" class="nav-link">--}}
-{{--                        <i class="nav-icon fas fa-copy"></i>--}}
-{{--                        <p>--}}
-{{--                            Layout Options--}}
-{{--                            <i class="fas fa-angle-left right"></i>--}}
-{{--                            <span class="badge badge-info right">6</span>--}}
-{{--                        </p>--}}
-{{--                    </a>--}}
-{{--                    <ul class="nav nav-treeview">--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="../layout/top-nav.html" class="nav-link">--}}
-{{--                                <i class="far fa-circle nav-icon"></i>--}}
-{{--                                <p>Top Navigation</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="../layout/top-nav-sidebar.html" class="nav-link">--}}
-{{--                                <i class="far fa-circle nav-icon"></i>--}}
-{{--                                <p>Top Navigation + Sidebar</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

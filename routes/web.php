@@ -34,3 +34,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
     Route::post('user/import', [\App\Http\Controllers\Admin\UserController::class, 'import'])->name('user.import');
 });
+
+Route::middleware(['auth', 'role:mechanic'])->prefix('mechanic')->as('mechanic.')->group(function() {
+    Route::get('/', [\App\Http\Controllers\Mechanic\PageController::class, 'index'])->name('dashboard');
+
+    Route::get('/tool/data', [\App\Http\Controllers\Mechanic\PageController::class, 'data'])->name('tool.data');
+});

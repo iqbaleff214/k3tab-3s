@@ -93,7 +93,7 @@ class ConsumableController extends Controller
      */
     public function show(Consumable $consumable): Renderable
     {
-        return view('pages.admin.consumable.edit', [
+        return view('pages.admin.consumable.show', [
             'title' => 'Show Consumable',
             'forms' => $this->form,
             'consumable' => $consumable

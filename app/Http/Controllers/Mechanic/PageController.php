@@ -3,12 +3,23 @@
 namespace App\Http\Controllers\Mechanic;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tool;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function index(Request $request)
+    public function index(): Renderable
     {
-        echo 'Mainnya hebat!';
+        return view('pages.mechanic.dashboard', [
+            'title' => 'Dashboard'
+        ]);
+    }
+
+    public function data(Request $request): JsonResponse
+    {
+        $data = Tool::all();
+        return response()->json(Tool::paginate(12));
     }
 }

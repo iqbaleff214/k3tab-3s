@@ -8,7 +8,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1>
-                            <a href="{{ route('admin.tool.index') }}" class="mr-2 text-decoration-none text-dark">
+                            <a href="{{ route('admin.consumable.index') }}" class="mr-2 text-decoration-none text-dark">
                                 <i class="fas fa-arrow-left"></i>
                             </a>
                             {{ $title }}
@@ -29,13 +29,14 @@
                             <div class="row">
                                 @foreach($forms as $name => $type)
                                     <div class="form-group col-12 col-lg-6">
-                                        <label
-                                            for="{{ $name }}">{{ Str::title(str_replace('_', ' ', $name)) }}</label>
+                                        <label for="{{ $name }}">
+                                            {{ Str::title(str_replace('_', ' ', $name)) }}
+                                        </label>
                                         <input type="{{ $type }}"
                                                class="form-control"
                                                name="{{ $name }}" id="{{ $name }}"
                                                placeholder="{{ Str::title(str_replace('_', ' ', $name)) }}"
-                                               value="{{ old($name, $type == 'date' ? date('Y-m-d', strtotime($tool->$name)) : $tool->$name) }}"
+                                               value="{{ old($name, $consumable->$name) }}"
                                                {{ $loop->first ? 'autofocus' : '' }} disabled>
                                     </div>
                                 @endforeach
