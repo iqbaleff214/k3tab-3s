@@ -42,4 +42,27 @@ Route::middleware(['auth', 'role:mechanic'])->prefix('mechanic')->as('mechanic.'
     Route::get('/tool/data', [\App\Http\Controllers\Mechanic\ToolController::class, 'data'])->name('tool.data');
     Route::get('/tool/{tool}', [\App\Http\Controllers\Mechanic\ToolController::class, 'show'])->name('tool.show');
     Route::post('/tool/{tool}/order', [\App\Http\Controllers\Mechanic\ToolController::class, 'order'])->name('tool.order');
+
+    Route::get('/consumable', [\App\Http\Controllers\Mechanic\ConsumableController::class, 'index'])->name('consumable.index');
+    Route::get('/consumable/data', [\App\Http\Controllers\Mechanic\ConsumableController::class, 'data'])->name('consumable.data');
+    Route::get('/consumable/{consumable}', [\App\Http\Controllers\Mechanic\ConsumableController::class, 'show'])->name('consumable.show');
+    Route::post('/consumable/{consumable}/order', [\App\Http\Controllers\Mechanic\ConsumableController::class, 'order'])->name('consumable.order');
+});
+
+Route::middleware(['auth', 'role:supervisor'])->prefix('supervisor')->as('supervisor.')->group(function() {
+    Route::get('/', [\App\Http\Controllers\Supervisor\PageController::class, 'index'])->name('dashboard');
+});
+
+Route::middleware(['auth', 'role:toolman'])->prefix('toolman')->as('toolman.')->group(function() {
+    Route::get('/', [\App\Http\Controllers\Toolman\PageController::class, 'index'])->name('dashboard');
+
+    Route::prefix('request')->as('request.')->group(function() {
+
+        Route::get('/tool', [\App\Http\Controllers\Toolman\RequestToolController::class, 'index'])->name('tool.index');
+        Route::put('/tool/{tool}', [\App\Http\Controllers\Toolman\RequestToolController::class, 'update'])->name('tool.update');
+
+        Route::get('/consumable', [\App\Http\Controllers\Toolman\RequestConsumableController::class, 'index'])->name('consumable.index');
+        Route::put('/consumable/{consumable}', [\App\Http\Controllers\Toolman\RequestConsumableController::class, 'update'])->name('consumable.update');
+
+    });
 });

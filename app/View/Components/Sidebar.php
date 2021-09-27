@@ -2,6 +2,9 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Sidebar extends Component
@@ -32,7 +35,21 @@ class Sidebar extends Component
                 $menus = [
                     'mechanic.dashboard' => ['Dashboard', 'fas fa-home'],
                     'mechanic.tool.index' => ['Tools', 'fas fa-tools', 'mechanic.tool.*'],
+                    'mechanic.consumable.index' => ['Consumable', 'fas fa-box-tissue', 'mechanic.consumable.*'],
                 ];
+                break;
+            case 'SUPERVISOR':
+                $menus = [
+                    'supervisor.dashboard' => ['Dashboard', 'fas fa-home'],
+                ];
+                break;
+            case 'TOOLMAN':
+                $menus = [
+                    'toolman.dashboard' => ['Dashboard', 'fas fa-home'],
+                    'toolman.request.tool.index' => ['Tool Request', 'fas fa-file-alt', 'toolman.request.tool.*'],
+                    'toolman.request.consumable.index' => ['Consumable Request', 'far fa-file-alt', 'toolman.request.consumable.*'],
+                ];
+                break;
         }
 
         $this->menus = $menus;
@@ -41,7 +58,7 @@ class Sidebar extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return Application|Factory|View
      */
     public function render()
     {

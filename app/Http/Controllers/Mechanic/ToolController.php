@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mechanic;
 use App\Http\Controllers\Controller;
 use App\Models\RequestTool;
 use App\Models\Tool;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -76,6 +77,7 @@ class ToolController extends Controller
             RequestTool::create([
                 'user_id' => auth()->user()->id,
                 'tool_id' => $tool->id,
+                'requested_at' => Carbon::now()
             ]);
 
             $tool->update(['equipment_status' => 2, 'equipment_note' => 'Requested by ' . auth()->user()->name]);

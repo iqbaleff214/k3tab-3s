@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(RequestTool::class, 'user_id');
     }
+
+    public function consumable_request(): HasMany
+    {
+        return $this->hasMany(RequestConsumable::class, 'user_id');
+    }
 }

@@ -11,7 +11,7 @@ class RequestTool extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['service_order', 'user_id', 'tool_id', 'request_status'];
+    protected $fillable = ['service_order', 'user_id', 'tool_id', 'request_status', 'requested_at', 'borrowed_at', 'rejected_at', 'returned_at'];
 
     public function user(): BelongsTo
     {
