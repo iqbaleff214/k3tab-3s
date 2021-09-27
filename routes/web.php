@@ -56,6 +56,8 @@ Route::middleware(['auth', 'role:supervisor'])->prefix('supervisor')->as('superv
 Route::middleware(['auth', 'role:toolman'])->prefix('toolman')->as('toolman.')->group(function() {
     Route::get('/', [\App\Http\Controllers\Toolman\PageController::class, 'index'])->name('dashboard');
 
+    Route::resource('tool', \App\Http\Controllers\Toolman\ToolController::class);
+
     Route::prefix('request')->as('request.')->group(function() {
 
         Route::get('/tool', [\App\Http\Controllers\Toolman\RequestToolController::class, 'index'])->name('tool.index');

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Toolman;
 
 use App\Http\Controllers\Controller;
 use App\Models\RequestTool;
-use App\Models\Tool;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;

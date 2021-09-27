@@ -46,6 +46,8 @@ class Sidebar extends Component
             case 'TOOLMAN':
                 $menus = [
                     'toolman.dashboard' => ['Dashboard', 'fas fa-home'],
+
+                    'toolman.tool.index' => ['Tools', 'fas fa-tools', 'toolman.tool.*'],
                     'toolman.request.tool.index' => ['Tool Request', 'fas fa-file-alt', 'toolman.request.tool.*'],
                     'toolman.request.consumable.index' => ['Consumable Request', 'far fa-file-alt', 'toolman.request.consumable.*'],
                 ];
