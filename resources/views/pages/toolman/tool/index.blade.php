@@ -19,6 +19,13 @@
             <!-- Default box -->
             <div class="card card-dark card-outline">
                 <div class="card-body">
+                    <div class="mb-4">
+{{--                        <div class="btn-group">--}}
+                            <a href="?status=1" type="button" class="btn {{ ($_GET['status'] ?? 99) == 1 ? 'bg-navy' : 'btn-outline-dark' }}">Available</a>
+                            <a href="?status=2" type="button" class="btn {{ ($_GET['status'] ?? 99) == 2 ? 'bg-navy' : 'btn-outline-dark' }}">Requested</a>
+                            <a href="?status=0" type="button" class="btn {{ ($_GET['status'] ?? 99) == 0 ? 'bg-navy' : 'btn-outline-dark' }}">Not Available</a>
+{{--                        </div>--}}
+                    </div>
                     <table id="datatable" class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr class="text-center">
@@ -26,7 +33,8 @@
                                 <th>Equipment Number</th>
                                 <th>Description</th>
                                 <th>Status</th>
-                                <th style="width: 100px">Action</th>
+                                <th>Condition</th>
+                                <th style="width: 95px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,15 +61,21 @@
                 info: true,
                 autoWidth: false,
                 responsive: true,
-                ajax: "{!! url()->current() !!}",
+                ajax: {
+                    url: "{!! url()->current() !!}",
+                    data: function (data) {
+                        data.status = "{{ $_GET['status'] ?? '-' }}";
+                    }
+                },
                 processing: true,
                 serverSide: true,
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'equipment_number', name: 'equipment_number'},
                     {data: 'description', name: 'description'},
-                    {data: 'equipment_status', name: 'equipment_status'},
-                    {data: 'action', name: 'action'},
+                    {data: 'equipment_status', name: 'equipment_status', searchable: false},
+                    {data: 'equipment_note', name: 'equipment_note'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
             });
         });

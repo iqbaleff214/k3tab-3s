@@ -29,27 +29,10 @@
                                 <th>Equipment Number</th>
                                 <th>Description</th>
                                 <th>Status</th>
-                                <th style="width: 150px">Action</th>
+                                <th style="width: 155px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($items as $item)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->equipment_number }}</td>
-                                    <td>{{ $item->description }}</td>
-                                    <td>{{ $item->system_status }}</td>
-                                    <td class="text-center">
-                                        <a href="{{ route('admin.tool.show', $item) }}" class="btn btn-sm btn-success">Show</a>
-                                        <a href="{{ route('admin.tool.edit', $item) }}" class="btn btn-sm btn-primary">Edit</a>
-                                        <form action="{{ route('admin.tool.destroy', $item) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="#" class="btn btn-sm btn-danger" onclick="event.preventDefault(); deleteConfirm(this)">Delete</a>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -73,11 +56,16 @@
                 info: true,
                 autoWidth: false,
                 responsive: true,
-                {{--ajax: "{!! url()->current() !!}",--}}
-                {{--processing: true,--}}
-                {{--serverSide: true,--}}
-                {{--columns: [--}}
-                {{--]--}}
+                ajax: "{!! url()->current() !!}",
+                processing: true,
+                serverSide: true,
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'equipment_number', name: 'equipment_number'},
+                    {data: 'description', name: 'description'},
+                    {data: 'equipment_status', name: 'equipment_status'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false },
+                ]
             });
         });
     </script>

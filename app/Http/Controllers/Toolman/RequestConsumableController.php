@@ -47,7 +47,7 @@ class RequestConsumableController extends Controller
                     return $row->user->name . ' <div class="text-muted text-xs">' . $row->user->salary_number . ' </div> ';
                 })
                 ->addColumn('consumable', function ($row) {
-                    return $row->consumable->description . ' <a class="text-muted text-xs d-block" href="' . route('home') . '">Number: ' . $row->consumable->consumable_number . ' </a> ';
+                    return $row->consumable->description . ' <a class="text-muted text-xs d-block" href="' . route('toolman.consumable.show', $row->consumable_id) . '">Number: ' . $row->consumable->consumable_number . ' </a> ';
                 })
                 ->addColumn('stock', function ($row) {
                     return $row->consumable->quantity . ' ' . $row->consumable->unit;

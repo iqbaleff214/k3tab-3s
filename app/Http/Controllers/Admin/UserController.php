@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Imports\UsersImport;
 use App\Models\User;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
@@ -24,16 +26,32 @@ class UserController extends Controller
         'phone_number' => 'text',
     ];
 
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return Renderable
+     * @throws Exception
      */
-    public function index(): Renderable
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            return DataTables::of(User::where('role', '!=', 'ADMIN')->get())
+                ->addIndexColumn()
+                ->editColumn('salary_number', function($row) {
+                    return $row->salary_number ?? '-';
+                })
+                ->addColumn('action', function($row) {
+                    return '<a href="' . route('admin.user.show', $row) . '" class="btn btn-sm btn-success">Show</a>
+                            <a href="' . route('admin.user.edit', $row) . '" class="btn btn-sm btn-primary">Edit</a>
+                            <form action="' . route('admin.user.destroy', $row) . '" method="POST" class="d-inline">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="'.csrf_token().'" />
+                                <a href="#" class="btn btn-sm btn-danger ' . ( $row->role !== 'MECHANIC' ? 'disabled' : '') . '" onclick="event.preventDefault(); deleteConfirm(this)">Delete</a>
+                            </form>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
         return view('pages.admin.user.index', [
             'title' => 'Users',
-            'items' => User::where('role', 'MECHANIC')->get()
         ]);
     }
 
@@ -70,7 +88,7 @@ class UserController extends Controller
             $data['password'] = Hash::make($request->input('password'));
             User::create($data);
             return redirect()->route('admin.user.index')->with('success', 'Successfully added service man!');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return redirect()->route('admin.user.create')->with('error', $exception->getMessage());
         }
     }
@@ -84,7 +102,7 @@ class UserController extends Controller
         try {
             Excel::import(new UsersImport(), \request()->file('file'));
             return redirect()->route('admin.user.index')->with('success', 'Successfully imported service men!');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
     }
@@ -137,7 +155,7 @@ class UserController extends Controller
         try {
             $user->update($request->input());
             return back()->with('success', 'Successfully edited the service man!');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
     }
@@ -153,7 +171,7 @@ class UserController extends Controller
         try {
             $user->delete();
             return redirect()->route('admin.user.index')->with('success', 'Successfully deleted the serviceman!');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return redirect()->route('admin.user.index')->with('error', $exception->getMessage());
         }
     }

@@ -29,27 +29,11 @@
                                 <th>Salary Number</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th style="width: 150px">Action</th>
+                                <th>Role</th>
+                                <th style="width: 155px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($items as $item)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->salary_number ?? '-' }}</td>
-                                    <td>{{ $item->name ?? '-' }}</td>
-                                    <td>{{ $item->email ?? '-' }}</td>
-                                    <td class="text-center">
-                                        <a href="{{ route('admin.user.show', $item) }}" class="btn btn-sm btn-success">Show</a>
-                                        <a href="{{ route('admin.user.edit', $item) }}" class="btn btn-sm btn-primary">Edit</a>
-                                        <form action="{{ route('admin.user.destroy', $item) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="#" class="btn btn-sm btn-danger" onclick="event.preventDefault(); deleteConfirm(this)">Delete</a>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -73,6 +57,17 @@
                 info: true,
                 autoWidth: false,
                 responsive: true,
+                ajax: "{!! url()->current() !!}",
+                processing: true,
+                serverSide: true,
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'salary_number', name: 'salary_number'},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'role', name: 'role'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false },
+                ]
             });
         });
     </script>

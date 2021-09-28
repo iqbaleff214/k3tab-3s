@@ -15,9 +15,9 @@
                         <div class="col-12 col-md-6 col-lg-3">
                             <select name="status" class="form-control select2">
                                 <option disabled selected>Equipment Status</option>
-                                <option value="0" {{ isset($_GET['status']) ? ($_GET['status'] == 0 ? 'selected' : '') : '' }} >Not Available</option>
-                                <option value="1" {{ isset($_GET['status']) ? ($_GET['status'] == 1 ? 'selected' : '') : '' }} >Available</option>
-                                <option value="2" {{ isset($_GET['status']) ? ($_GET['status'] == 2 ? 'selected' : '') : '' }} >Requested</option>
+                                <option value="0" {{ isset($_GET['status']) ? ($_GET['status'] == 0 ? 'selected' : '') : '' }} >Not Ready</option>
+                                <option value="1" {{ isset($_GET['status']) ? ($_GET['status'] == 1 ? 'selected' : '') : '' }} >Ready</option>
+                                <option value="2" {{ isset($_GET['status']) ? ($_GET['status'] == 2 ? 'selected' : '') : '' }} >Already Requested</option>
                             </select>
                         </div>
                         <div class="col-12 col-md-6 col-lg-9">

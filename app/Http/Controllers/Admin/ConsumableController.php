@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Imports\ConsumablesImport;
 use App\Models\Consumable;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\DataTables;
 
 class ConsumableController extends Controller
 {
@@ -23,15 +25,27 @@ class ConsumableController extends Controller
     ];
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Renderable
+     * @throws Exception
      */
-    public function index(): Renderable
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            return DataTables::of(Consumable::all())
+                ->addIndexColumn()
+                ->addColumn('action', function($row) {
+                    return '<a href="' . route('admin.consumable.show', $row) . '" class="btn btn-sm btn-success">Show</a>
+                            <a href="' . route('admin.consumable.edit', $row) . '" class="btn btn-sm btn-primary">Edit</a>
+                            <form action="' . route('admin.consumable.destroy', $row) . '" method="POST" class="d-inline">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="'.csrf_token().'" />
+                                <a href="#" class="btn btn-sm btn-danger" onclick="event.preventDefault(); deleteConfirm(this)">Delete</a>
+                            </form>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
         return view('pages.admin.consumable.index', [
             'title' => 'Consumables',
-            'items' => Consumable::all(),
         ]);
     }
 
@@ -66,7 +80,7 @@ class ConsumableController extends Controller
         try {
             Consumable::create($request->input());
             return redirect()->route('admin.consumable.index')->with('success', 'Successfully added consumable!');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return redirect()->route('admin.consumable.create')->with('error', $exception->getMessage());
         }
     }
@@ -80,7 +94,7 @@ class ConsumableController extends Controller
         try {
             Excel::import(new ConsumablesImport(), \request()->file('file'));
             return redirect()->route('admin.consumable.index')->with('success', 'Successfully imported consumables!');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
     }
@@ -134,7 +148,7 @@ class ConsumableController extends Controller
         try {
             $consumable->update($request->input());
             return back()->with('success', 'Successfully edited the consumable!');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
     }
@@ -150,7 +164,7 @@ class ConsumableController extends Controller
         try {
             $consumable->delete();
             return redirect()->route('admin.consumable.index')->with('success', 'Successfully deleted the consumable!');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return redirect()->route('admin.consumable.index')->with('error', $exception->getMessage());
         }
     }

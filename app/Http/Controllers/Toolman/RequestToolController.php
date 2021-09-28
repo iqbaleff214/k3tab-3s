@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Toolman;
 use App\Http\Controllers\Controller;
 use App\Models\RequestTool;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -27,10 +28,10 @@ class RequestToolController extends Controller
                     // 3: Rejected
                     switch ($row->request_status) {
                         case 0:
-                            $status = '<span class="badge badge-primary">Requested</span>';
+                            $status = '<span class="badge badge-warning">Requested</span>';
                             break;
                         case 1:
-                            $status = '<span class="badge badge-warning">Borrowed</span>';
+                            $status = '<span class="badge badge-primary">Borrowed</span>';
                             break;
                         case 2:
                             $status = '<span class="badge badge-success">Returned</span>';
@@ -48,7 +49,7 @@ class RequestToolController extends Controller
                     return $row->user->name . ' <div class="text-muted text-xs">' . $row->user->salary_number . ' </div> ';
                 })
                 ->addColumn('tool', function ($row) {
-                    return $row->tool->description . ' <div class="text-muted text-xs">Number: ' . $row->tool->equipment_number . ' </div> ';
+                    return $row->tool->description . ' <a class="text-muted text-xs d-block" href="' . route('toolman.tool.show', $row->tool_id) . '">Number: ' . $row->tool->equipment_number . ' </a> ';
                 })
                 ->addColumn('action', function ($row) {
                     $action = '';
@@ -72,7 +73,7 @@ class RequestToolController extends Controller
                                             <input type="hidden" name="_method" value="PUT">
                                             <input type="hidden" name="_token" value="' . csrf_token() . '" />
                                             <input type="hidden" name="request_status" value="2">
-                                            <button type="button" class="btn btn-primary btn-sm px-2" onclick="justConfirm(this)"> Returned </button>
+                                            <button type="button" class="btn btn-primary btn-sm btn-block px-2" onclick="justConfirm(this)"> Returned </button>
                                         </form>';
                             break;
                     }
@@ -87,7 +88,7 @@ class RequestToolController extends Controller
         ]);
     }
 
-    public function update(Request $request, RequestTool $tool)
+    public function update(Request $request, RequestTool $tool): RedirectResponse
     {
         try {
             $status_request = $request->input('request_status');

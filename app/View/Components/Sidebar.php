@@ -26,6 +26,7 @@ class Sidebar extends Component
             case 'ADMIN':
                 $menus = [
                     'admin.dashboard' => ['Dashboard', 'fas fa-home'],
+                    'MASTER DATA',
                     'admin.tool.index' => ['Tools', 'fas fa-tools', 'admin.tool.*'],
                     'admin.consumable.index' => ['Consumables', 'fas fa-box-tissue', 'admin.consumable.*'],
                     'admin.user.index' => ['Users', 'fas fa-users', 'admin.user.*'],
@@ -34,8 +35,10 @@ class Sidebar extends Component
             case 'MECHANIC':
                 $menus = [
                     'mechanic.dashboard' => ['Dashboard', 'fas fa-home'],
+                    '',
                     'mechanic.tool.index' => ['Tools', 'fas fa-tools', 'mechanic.tool.*'],
                     'mechanic.consumable.index' => ['Consumable', 'fas fa-box-tissue', 'mechanic.consumable.*'],
+                    'MY REQUEST'
                 ];
                 break;
             case 'SUPERVISOR':
@@ -46,8 +49,10 @@ class Sidebar extends Component
             case 'TOOLMAN':
                 $menus = [
                     'toolman.dashboard' => ['Dashboard', 'fas fa-home'],
-
+                    'MASTER DATA',
                     'toolman.tool.index' => ['Tools', 'fas fa-tools', 'toolman.tool.*'],
+                    'toolman.consumable.index' => ['Consumables', 'fas fa-box-tissue', 'toolman.consumable.*'],
+                    'REQUEST',
                     'toolman.request.tool.index' => ['Tool Request', 'fas fa-file-alt', 'toolman.request.tool.*'],
                     'toolman.request.consumable.index' => ['Consumable Request', 'far fa-file-alt', 'toolman.request.consumable.*'],
                 ];

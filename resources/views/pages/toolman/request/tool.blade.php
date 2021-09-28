@@ -27,7 +27,7 @@
                             <th>Name</th>
                             <th>Tool</th>
                             <th>Status</th>
-                            <th style="width: 100px">Action</th>
+                            <th style="width: 95px">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -63,7 +63,7 @@
                     {data: 'mechanic', name: 'mechanic'},
                     {data: 'tool', name: 'tool'},
                     {data: 'request_status', name: 'request_status'},
-                    {data: 'action', name: 'action'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });
         });

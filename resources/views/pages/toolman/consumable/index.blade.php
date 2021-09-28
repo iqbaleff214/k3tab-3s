@@ -21,16 +21,14 @@
                 <div class="card-body">
                     <table id="datatable" class="table table-bordered table-striped table-hover">
                         <thead>
-                        <tr class="text-center">
-                            <th width="10px">No.</th>
-                            <th>Request Date</th>
-                            <th>Name</th>
-                            <th>Consumable</th>
-                            <th>Stock</th>
-                            <th>Qty</th>
-                            <th>Accepted</th>
-                            <th style="width: 95px">Action</th>
-                        </tr>
+                            <tr class="text-center">
+                                <th width="10px">No.</th>
+                                <th>Consumable Number</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                <th style="width: 95px">Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -61,13 +59,11 @@
                 serverSide: true,
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'created_at', name: 'created_at'},
-                    {data: 'mechanic', name: 'mechanic'},
-                    {data: 'consumable', name: 'consumable'},
-                    {data: 'stock', name: 'stock'},
-                    {data: 'requested_quantity', name: 'requested_quantity'},
-                    {data: 'accepted_quantity', name: 'accepted_quantity'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                    {data: 'consumable_number', name: 'consumable_number'},
+                    {data: 'description', name: 'description'},
+                    {data: 'quantity', name: 'quantity'},
+                    {data: 'unit', name: 'unit'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
             });
         });

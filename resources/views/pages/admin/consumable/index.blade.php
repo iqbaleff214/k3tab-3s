@@ -30,28 +30,10 @@
                                 <th>Description</th>
                                 <th>Quantity</th>
                                 <th>Unit</th>
-                                <th style="width: 150px">Action</th>
+                                <th style="width: 155px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($items as $item)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->consumable_number }}</td>
-                                    <td>{{ $item->description }}</td>
-                                    <td>{{ $item->quantity }}</td>
-                                    <td>{{ $item->unit }}</td>
-                                    <td class="text-center">
-                                        <a href="{{ route('admin.consumable.show', $item) }}" class="btn btn-sm btn-success">Show</a>
-                                        <a href="{{ route('admin.consumable.edit', $item) }}" class="btn btn-sm btn-primary">Edit</a>
-                                        <form action="{{ route('admin.consumable.destroy', $item) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="#" class="btn btn-sm btn-danger" onclick="event.preventDefault(); deleteConfirm(this)">Delete</a>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -75,6 +57,17 @@
                 info: true,
                 autoWidth: false,
                 responsive: true,
+                ajax: "{!! url()->current() !!}",
+                processing: true,
+                serverSide: true,
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'consumable_number', name: 'consumable_number'},
+                    {data: 'description', name: 'description'},
+                    {data: 'quantity', name: 'quantity'},
+                    {data: 'unit', name: 'unit'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false },
+                ]
             });
         });
     </script>

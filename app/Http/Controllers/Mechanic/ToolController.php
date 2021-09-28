@@ -64,7 +64,7 @@ class ToolController extends Controller
         if ($request->get('q')) {
             $data = $data->where('description', 'like', "%" . $request->get('q') . "%")->orWhere('equipment_number', 'like', "%" . $request->get('q') . "%");
         }
-        return response()->json($data->paginate(24));
+        return response()->json($data->paginate(9));
     }
 
     public function order(Request $request, Tool $tool)

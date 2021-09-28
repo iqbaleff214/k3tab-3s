@@ -56,7 +56,8 @@ Route::middleware(['auth', 'role:supervisor'])->prefix('supervisor')->as('superv
 Route::middleware(['auth', 'role:toolman'])->prefix('toolman')->as('toolman.')->group(function() {
     Route::get('/', [\App\Http\Controllers\Toolman\PageController::class, 'index'])->name('dashboard');
 
-    Route::resource('tool', \App\Http\Controllers\Toolman\ToolController::class);
+    Route::resource('tool', \App\Http\Controllers\Toolman\ToolController::class)->except(['destroy', 'create', 'store']);
+    Route::resource('consumable', \App\Http\Controllers\Toolman\ConsumableController::class)->except(['destroy', 'create', 'store']);
 
     Route::prefix('request')->as('request.')->group(function() {
 

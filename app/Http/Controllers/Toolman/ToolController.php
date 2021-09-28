@@ -5,23 +5,57 @@ namespace App\Http\Controllers\Toolman;
 use App\Http\Controllers\Controller;
 use App\Models\Tool;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
 
 class ToolController extends Controller
 {
 
+    private $form = [
+        'equipment_number' => 'text',
+        'tech_ident_number' => 'text',
+        'equipment_status' => 'text',
+        'equipment_note' => 'text',
+        'business_area' => 'text',
+        'maintenance_plant' => 'text',
+        'material' => 'text',
+        'manufacturer' => 'text',
+        'description' => 'text',
+        'additional_description' => 'text',
+        'size' => 'text',
+        'manufacture_serial_number' => 'text',
+        'asset' => 'text',
+        'location' => 'text',
+        'license_number' => 'text',
+        'system_status' => 'text',
+        'user_status' => 'text',
+        'sort_field' => 'text',
+        'equipment_category' => 'text',
+        'currency' => 'text',
+        'acquisition_value' => 'text',
+        'startup_date' => 'date',
+        'changed_by' => 'text',
+        'created_by' => 'text',
+        'abc_indicator' => 'text',
+        'acquisition_date' => 'date',
+    ];
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return DataTables::of(Tool::all())
+            $data = Tool::where('equipment_number', '!=', null);
+            if (in_array($request->get('status'), [0,1,2]))
+                $data->where('equipment_status', $request->get('status'));
+            return DataTables::of($data->get())
                 ->addIndexColumn()
-                ->editColumn('equipment_status', function($row) {
-                    return $row->equipment_status === 1 ? '<span class="badge badge-success">Available</span>' : '<span class="badge badge-danger">Not Available</span>';
+                ->editColumn('equipment_status', function ($row) {
+                    return $row->equipment_status === 1 ? '<span class="badge badge-success">Available</span>' : ($row->equipment_status === 2 ? '<span class="badge badge-warning">Requested</span>' : '<span class="badge badge-danger">Not Available</span>');
                 })
-                ->addColumn('action', function($row) {
-                    return '<a href="'. route('toolman.tool.show', $row) .'" class="btn btn-sm btn-success">Show</a>
-                            <a href="'. route('toolman.tool.edit', $row) .'" class="btn btn-sm btn-primary">Edit</a>';
+                ->addColumn('action', function ($row) {
+                    return '<a href="' . route('toolman.tool.show', $row) . '" class="btn btn-sm btn-success">Show</a>
+                            <a href="' . route('toolman.tool.edit', $row) . '" class="btn btn-sm btn-primary">Edit</a>';
                 })
                 ->rawColumns(['action', 'equipment_status'])
                 ->make(true);
@@ -32,68 +66,57 @@ class ToolController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Tool $tool
+     * @return Renderable
      */
-    public function create()
+    public function show(Tool $tool): Renderable
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('pages.toolman.tool.show', [
+            'title' => 'Show Tool',
+            'forms' => $this->form,
+            'tool' => $tool
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tool  $tool
-     * @return \Illuminate\Http\Response
+     * @param Tool $tool
+     * @return Renderable
      */
-    public function show(Tool $tool)
+    public function edit(Tool $tool): Renderable
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tool  $tool
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tool $tool)
-    {
-        //
+        return view('pages.toolman.tool.edit', [
+            'title' => 'Edit Tool',
+            'forms' => $this->form,
+            'tool' => $tool,
+            'opt' => ['Not Available', 'Available', 'Requested']
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tool  $tool
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Tool $tool
+     * @return RedirectResponse
      */
-    public function update(Request $request, Tool $tool)
+    public function update(Request $request, Tool $tool): RedirectResponse
     {
-        //
-    }
+        $request->validate([
+            'equipment_number' => ['required', Rule::unique('tools')->ignore($tool), 'integer'],
+            'description' => ['required'],
+            'equipment_status' => ['required'],
+            'equipment_note' => ['required'],
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Tool  $tool
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Tool $tool)
-    {
-        //
+        try {
+            $tool->update($request->input());
+            return back()->with('success', 'Successfully edited the equipment!');
+        } catch (\Exception $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
     }
 }

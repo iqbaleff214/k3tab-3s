@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\DataTables;
 
 class ToolController extends Controller
 {
@@ -43,16 +44,30 @@ class ToolController extends Controller
     ];
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Renderable
      * @throws Exception
      */
-    public function index(): Renderable
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            return DataTables::of(Tool::all())
+                ->addIndexColumn()
+                ->editColumn('equipment_status', function($row) {
+                    return $row->equipment_status === 1 ? '<span class="badge badge-success">Available</span>' : '<span class="badge badge-danger">Not Available</span>';
+                })
+                ->addColumn('action', function($row) {
+                    return '<a href="' . route('admin.tool.show', $row) . '" class="btn btn-sm btn-success">Show</a>
+                            <a href="' . route('admin.tool.edit', $row) . '" class="btn btn-sm btn-primary">Edit</a>
+                            <form action="' . route('admin.tool.destroy', $row) . '" method="POST" class="d-inline">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="'.csrf_token().'" />
+                                <a href="#" class="btn btn-sm btn-danger" onclick="event.preventDefault(); deleteConfirm(this)">Delete</a>
+                            </form>';
+                })
+                ->rawColumns(['action', 'equipment_status'])
+                ->make(true);
+        }
         return view('pages.admin.tool.index', [
             'title' => 'Tools',
-            'items' => Tool::all(),
         ]);
     }
 
