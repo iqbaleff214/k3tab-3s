@@ -15,6 +15,8 @@ class RequestToolController extends Controller
     {
         if ($request->ajax()) {
             $data = RequestTool::where('user_id', '!=', null)->orderBy('created_at', 'DESC');
+            if (in_array($request->get('status'), [0,1,2,3]))
+                $data->where('request_status', $request->get('status'));
             return DataTables::of($data->get())
                 ->addIndexColumn()
                 ->editColumn('created_at', function ($row) {

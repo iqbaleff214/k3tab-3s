@@ -29,7 +29,7 @@
                             <th>Stock</th>
                             <th>Qty</th>
                             <th>Accepted</th>
-                            <th style="width: 95px">Action</th>
+                            <th style="width: 115px">Action</th>
                         </tr>
                         </thead>
                         <tbody>

@@ -19,6 +19,20 @@
             <!-- Default box -->
             <div class="card card-dark card-outline">
                 <div class="card-body">
+                    <div class="mb-4">
+                        <a href={{ route('toolman.request.tool.index') }} type="button"
+                           class="btn {{ !in_array(($_GET['status'] ?? 99), [0,1,2,3]) ? 'bg-navy' : 'btn-outline-dark' }}">All</a>
+                        <a href="?status=0" type="button"
+                           class="btn {{ ($_GET['status'] ?? 99) == 0 ? 'bg-navy' : 'btn-outline-dark' }}">
+                            Requested
+                        </a>
+                        <a href="?status=1" type="button"
+                           class="btn {{ ($_GET['status'] ?? 99) == 1 ? 'bg-navy' : 'btn-outline-dark' }}">Borrowed</a>
+                        <a href="?status=2" type="button"
+                           class="btn {{ ($_GET['status'] ?? 99) == 2 ? 'bg-navy' : 'btn-outline-dark' }}">Returned</a>
+                        <a href="?status=3" type="button"
+                           class="btn {{ ($_GET['status'] ?? 99) == 3 ? 'bg-navy' : 'btn-outline-dark' }}">Rejected</a>
+                    </div>
                     <table id="datatable" class="table table-bordered table-striped table-hover">
                         <thead>
                         <tr class="text-center">
@@ -27,7 +41,7 @@
                             <th>Name</th>
                             <th>Tool</th>
                             <th>Status</th>
-                            <th style="width: 95px">Action</th>
+                            <th style="width: 115px">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -54,7 +68,12 @@
                 info: true,
                 autoWidth: false,
                 responsive: true,
-                ajax: "{!! url()->current() !!}",
+                ajax: {
+                    url: "{!! url()->current() !!}",
+                    data: function (data) {
+                        data.status = "{{ $_GET['status'] ?? '-' }}";
+                    }
+                },
                 processing: true,
                 serverSide: true,
                 columns: [

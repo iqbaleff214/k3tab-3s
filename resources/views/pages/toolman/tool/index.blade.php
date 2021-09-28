@@ -20,22 +20,26 @@
             <div class="card card-dark card-outline">
                 <div class="card-body">
                     <div class="mb-4">
-{{--                        <div class="btn-group">--}}
-                            <a href="?status=1" type="button" class="btn {{ ($_GET['status'] ?? 99) == 1 ? 'bg-navy' : 'btn-outline-dark' }}">Available</a>
-                            <a href="?status=2" type="button" class="btn {{ ($_GET['status'] ?? 99) == 2 ? 'bg-navy' : 'btn-outline-dark' }}">Requested</a>
-                            <a href="?status=0" type="button" class="btn {{ ($_GET['status'] ?? 99) == 0 ? 'bg-navy' : 'btn-outline-dark' }}">Not Available</a>
-{{--                        </div>--}}
+                        <a href={{ route('toolman.tool.index') }} type="button"
+                           class="btn {{ !in_array(($_GET['status'] ?? 99), [0,1,2]) ? 'bg-navy' : 'btn-outline-dark' }}">All</a>
+                        <a href="?status=1" type="button"
+                           class="btn {{ ($_GET['status'] ?? 99) == 1 ? 'bg-navy' : 'btn-outline-dark' }}">Available</a>
+                        <a href="?status=2" type="button"
+                           class="btn {{ ($_GET['status'] ?? 99) == 2 ? 'bg-navy' : 'btn-outline-dark' }}">Requested</a>
+                        <a href="?status=0" type="button"
+                           class="btn {{ ($_GET['status'] ?? 99) == 0 ? 'bg-navy' : 'btn-outline-dark' }}">Not
+                            Available</a>
                     </div>
                     <table id="datatable" class="table table-bordered table-striped table-hover">
                         <thead>
-                            <tr class="text-center">
-                                <th width="10px">No.</th>
-                                <th>Equipment Number</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Condition</th>
-                                <th style="width: 95px">Action</th>
-                            </tr>
+                        <tr class="text-center">
+                            <th width="10px">No.</th>
+                            <th>Equipment Number</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Condition</th>
+                            <th style="width: 95px">Action</th>
+                        </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -75,8 +79,8 @@
                     {data: 'description', name: 'description'},
                     {data: 'equipment_status', name: 'equipment_status', searchable: false},
                     {data: 'equipment_note', name: 'equipment_note'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false },
-                ]
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ],
             });
         });
     </script>
