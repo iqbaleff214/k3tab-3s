@@ -21,13 +21,13 @@ Route::get('/', function () {
 Route::get('short/toolkeeper', function() {
     $user = \App\Models\User::where('role', 'TOOLKEEPER')->first();
     Auth::login($user);
-    return redirect()->route('home');
+    return redirect()->route('home')->with('info', 'demonstration purposes only!');
 });
 
 Route::get('short/serviceman', function() {
     $user = \App\Models\User::where('role', 'SERVICEMAN')->first();
     Auth::login($user);
-    return redirect()->route('home');
+    return redirect()->route('home')->with('info', 'demonstration purposes only!');
 });
 
 Auth::routes();
