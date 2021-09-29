@@ -53,7 +53,7 @@ Route::middleware(['auth', 'role:serviceman'])->prefix('serviceman')->as('servic
 
         Route::get('/tool', [\App\Http\Controllers\Serviceman\PageController::class, 'request_tool'])->name('tool.index');
 
-//        Route::get('/consumable', [\App\Http\Controllers\Serviceman\RequestConsumableController::class, 'index'])->name('consumable.index');
+        Route::get('/consumable', [\App\Http\Controllers\Serviceman\PageController::class, 'request_consumable'])->name('consumable.index');
 
     });
 });

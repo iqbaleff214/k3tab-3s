@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Tool;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -20,7 +21,6 @@ class ToolsImport implements ToCollection, WithHeadingRow, WithBatchInserts
     public function collection(Collection $collections)
     {
         foreach ($collections as $collection) {
-            $data = [];
             try {
                 $data = [
                     'part_number' => $collection['part_number'],
@@ -42,16 +42,16 @@ class ToolsImport implements ToCollection, WithHeadingRow, WithBatchInserts
                     'equipment_category' => $collection['equipment_category'],
                     'currency' => $collection['currency'],
                     'acquisition_value' => $collection['acquisition_value'],
-                    'startup_date' => Date::excelToDateTimeObject($collection['start_up_date']),
+                    'startup_date' => Date::excelToDateTimeObject($collection['start_up_date']) ?? Carbon::now(),
                     'changed_by' => $collection['changed_by'],
                     'created_by' => $collection['created_by'],
                     'abc_indicator' => $collection['abc_indic'],
-                    'acquisition_date' => Date::excelToDateTimeObject($collection['acquisition_date']),
-                    'created_at' => Date::excelToDateTimeObject($collection['created_on']),
+                    'acquisition_date' => Date::excelToDateTimeObject($collection['acquisition_date']) ?? Carbon::now(),
                 ];
                 Tool::create($data);
             } catch (\Exception $exception) {
                 echo $exception->getMessage();
+                die;
             }
         }
     }

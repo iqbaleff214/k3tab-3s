@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Serviceman;
 
 use App\Http\Controllers\Controller;
+use App\Models\RequestConsumable;
 use App\Models\RequestTool;
 use App\Models\Tool;
 use Carbon\Carbon;
@@ -74,6 +75,56 @@ class PageController extends Controller
 
         return view('pages.serviceman.tool.request', [
             'title' => 'Tool Request'
+        ]);
+    }
+
+    public function request_consumable(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = RequestConsumable::where('user_id', auth()->user()->id);
+            if (in_array($request->get('status'), [0,1,3]))
+                $data->where('request_status', $request->get('status'));
+            return DataTables::of($data->get())
+                ->addIndexColumn()
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->isoFormat('DD-MM-Y HH:mm') . ' <div class="text-muted text-xs"> ' . $row->created_at->diffForHumans() . ' </div> ';
+                })
+                ->editColumn('request_status', function ($row) {
+                    $status = '';
+                    // 0: Requested
+                    // 1: Accepted
+                    // 2: -
+                    // 3: Rejected
+                    switch ($row->request_status) {
+                        case 0:
+                            $status = '<span class="badge badge-primary">Requested</span>';
+                            break;
+                        case 1:
+                            $status = '<span class="badge badge-success">Accepted</span>';
+                            break;
+                        case 3:
+                            $status = '<span class="badge badge-danger">Rejected</span>';
+                            break;
+                    }
+                    return $status;
+                })
+                ->editColumn('requested_quantity', function ($row) {
+                    return $row->requested_quantity . ' ' . $row->consumable->unit;
+                })->editColumn('accepted_quantity', function ($row) {
+                    return ($row->accepted_quantity ?? 0) . ' ' . $row->consumable->unit;
+                })
+                ->addColumn('consumable', function ($row) {
+                    return $row->consumable->description . ' <a class="text-muted text-xs d-block" href="' . route('toolkeeper.consumable.show', $row->consumable_id) . '">Number: ' . $row->consumable->consumable_number . ' </a> ';
+                })
+                ->addColumn('stock', function ($row) {
+                    return $row->consumable->quantity . ' ' . $row->consumable->unit;
+                })
+                ->rawColumns(['request_status', 'created_at', 'consumable'])
+                ->make(true);
+        }
+
+        return view('pages.serviceman.consumable.request', [
+            'title' => 'Consumable Request'
         ]);
     }
 }
