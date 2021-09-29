@@ -97,7 +97,7 @@
                                 <div class="card-body">
                                     <h5 class="font-weight-bold"><a href="/serviceman/consumable/` + e.id + `" style="cursor: pointer" class="text-dark text-decoration-none">` + e.description + `</a></h5>
                                     <h6 class="card-subtitle mb-2 text-muted">Number: ` + e.consumable_number + `</h6>
-                                    <p class="card-text">` + e.additional_description + `</p>
+                                    <p class="card-text">` + (e.additional_description ?? '-') + `</p>
                                     ` + STATUS + `
                                     ` + REQUEST + `
                                 </div>
