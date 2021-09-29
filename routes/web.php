@@ -18,6 +18,18 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('short/toolkeeper', function() {
+    $user = \App\Models\User::where('role', 'TOOLKEEPER')->first();
+    Auth::login($user);
+    return redirect()->route('home');
+});
+
+Route::get('short/serviceman', function() {
+    $user = \App\Models\User::where('role', 'SERVICEMAN')->first();
+    Auth::login($user);
+    return redirect()->route('home');
+});
+
 Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
