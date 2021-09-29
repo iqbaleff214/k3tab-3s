@@ -19,9 +19,6 @@
             <!-- Default box -->
             <div class="card card-dark card-outline">
                 <div class="card-body">
-                    <div class="mb-4">
-                        <a href="{{ route('admin.user.create') }}" class="btn btn-outline-dark">Add User</a>
-                    </div>
                     <table id="datatable" class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr class="text-center">
@@ -30,7 +27,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th style="width: 155px">Action</th>
+                                <th style="width: 55px">Action</th>
                             </tr>
                         </thead>
                         <tbody>

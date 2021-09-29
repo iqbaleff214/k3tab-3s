@@ -46,7 +46,7 @@ class RequestConsumableController extends Controller
                     return ($row->accepted_quantity ?? 0) . ' ' . $row->consumable->unit;
                 })
                 ->addColumn('serviceman', function ($row) {
-                    return $row->user->name . ' <div class="text-muted text-xs">' . $row->user->salary_number . ' </div> ';
+                    return $row->user->name . ' <a class="text-muted text-xs d-block" href="' . route('toolkeeper.user.show', $row->user_id) . '">' . $row->user->salary_number . ' </a> ';
                 })
                 ->addColumn('consumable', function ($row) {
                     return $row->consumable->description . ' <a class="text-muted text-xs d-block" href="' . route('toolkeeper.consumable.show', $row->consumable_id) . '">Number: ' . $row->consumable->consumable_number . ' </a> ';

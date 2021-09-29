@@ -75,30 +75,57 @@
                 <!-- /.col -->
             </div>
 
-            <!-- Default box -->
-            <div class="card card-yellow card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">Title</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                            <i class="fas fa-times"></i>
-                        </button>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <!-- Default box -->
+                    <div class="card card-dark card-outline">
+                        <div class="card-header bg-white">
+                            <h3 class="card-title mb-0">Today's Tool Request</h3>
+                        </div>
+                        <div class="card-body">
+                            <table id="datatable-tool" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr class="text-center">
+                                    <th width="10px">No.</th>
+                                    <th>Name</th>
+                                    <th>Tool</th>
+                                    <th style="width: 55px">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
+                    <!-- /.card -->
                 </div>
-                <div class="card-body">
-                    Start creating your amazing application!
+                <div class="col-12 col-md-6">
+                    <!-- Default box -->
+                    <div class="card card-dark card-outline">
+                        <div class="card-header bg-white">
+                            <h3 class="card-title mb-0">Today's Consumable Request</h3>
+                        </div>
+                        <div class="card-body">
+                            <table id="datatable-consumable" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr class="text-center">
+                                    <th width="10px">No.</th>
+                                    <th>Name</th>
+                                    <th>Cons.</th>
+                                    <th>Qty</th>
+                                    <th style="width: 55px">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    Footer
-                </div>
-                <!-- /.card-footer-->
             </div>
-            <!-- /.card -->
 
         </section>
         <!-- /.content -->
@@ -108,8 +135,52 @@
 @push('script')
     <script>
         window.addEventListener('load', function () {
-            $(function () {
-                console.log('what');
+            $('#datatable-tool').DataTable({
+                paging: true,
+                lengthChange: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                autoWidth: false,
+                responsive: true,
+                ajax: {
+                    url: "{!! url()->current() !!}",
+                    data: function (data) {
+                        data.status = "tool";
+                    }
+                },
+                processing: true,
+                serverSide: true,
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'serviceman', name: 'serviceman'},
+                    {data: 'tool', name: 'tool'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+            $('#datatable-consumable').DataTable({
+                paging: true,
+                lengthChange: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                autoWidth: false,
+                responsive: true,
+                ajax: {
+                    url: "{!! url()->current() !!}",
+                    data: function (data) {
+                        data.status = "consumable";
+                    }
+                },
+                processing: true,
+                serverSide: true,
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'serviceman', name: 'serviceman'},
+                    {data: 'consumable', name: 'consumable'},
+                    {data: 'requested_quantity', name: 'requested_quantity'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
             });
         });
     </script>

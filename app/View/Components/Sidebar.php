@@ -38,7 +38,9 @@ class Sidebar extends Component
                     '',
                     'serviceman.tool.index' => ['Tools', 'fas fa-tools', 'serviceman.tool.*'],
                     'serviceman.consumable.index' => ['Consumable', 'fas fa-box-tissue', 'serviceman.consumable.*'],
-                    'MY REQUEST'
+                    'MY REQUEST',
+                    'serviceman.request.tool.index' => ['Tool Request', 'fas fa-file-alt', 'serviceman.request.tool.*'],
+//                    'serviceman.request.consumable.index' => ['Consumable Request', 'far fa-file-alt', 'serviceman.request.consumable.*'],
                 ];
                 break;
             case 'SUPERVISOR':

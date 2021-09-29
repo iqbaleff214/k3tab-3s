@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Toolkeeper;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -15,10 +16,10 @@ class UserController extends Controller
         if ($request->ajax()) {
             return DataTables::of(User::where('role', 'SERVICEMAN')->get())
                 ->addIndexColumn()
-                ->editColumn('salary_number', function($row) {
+                ->editColumn('salary_number', function ($row) {
                     return $row->salary_number ?? '-';
                 })
-                ->addColumn('action', function($row) {
+                ->addColumn('action', function ($row) {
                     return '<a href="' . route('toolkeeper.user.show', $row) . '" class="btn btn-sm btn-success">Show</a>';
                 })
                 ->rawColumns(['action'])
@@ -29,69 +30,51 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show(Request $request, User $user)
     {
-        //
+        if ($request->ajax()) {
+            $data = $user->tool_request()->orderByDesc('created_at');
+            return DataTables::of($data->get())
+                ->addIndexColumn()
+                ->editColumn('request_status', function ($row) {
+                    $status = '';
+                    // 0: Requested
+                    // 1: Borrowed
+                    // 2: Returned
+                    // 3: Rejected
+                    switch ($row->request_status) {
+                        case 0:
+                            $status = '<span class="badge badge-warning">Requested</span>';
+                            break;
+                        case 1:
+                            $status = '<span class="badge badge-primary">Borrowed</span>';
+                            break;
+                        case 2:
+                            $status = '<span class="badge badge-success">Returned</span>';
+                            break;
+                        case 3:
+                            $status = '<span class="badge badge-danger">Rejected</span>';
+                            break;
+                    }
+                    return $status;
+                })
+                ->addColumn('tool', function ($row) {
+                    return $row->tool->description . ' <a class="text-muted text-xs d-block" href="' . route('toolkeeper.tool.show', $row->tool_id) . '">Number: ' . $row->tool->part_number . ' </a> ';
+                })
+                ->rawColumns(['request_status', 'requested_at', 'tool', 'returned_at'])
+                ->make(true);
+        }
+        return view('pages.toolkeeper.user.show', [
+            'title' => 'Show Serviceman',
+            'user' => $user,
+            'forms' => [
+                'salary_number' => 'text',
+                'name' => 'text',
+                'email' => 'email',
+                'address' => 'text',
+                'phone_number' => 'text',
+            ],
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
 }

@@ -48,7 +48,7 @@ class RequestToolController extends Controller
                     return $row->created_at->diffForHumans();
                 })
                 ->addColumn('serviceman', function ($row) {
-                    return $row->user->name . ' <div class="text-muted text-xs">' . $row->user->salary_number . ' </div> ';
+                    return $row->user->name . ' <a class="text-muted text-xs d-block" href="' . route('toolkeeper.user.show', $row->user_id) . '">' . $row->user->salary_number . ' </a> ';
                 })
                 ->addColumn('tool', function ($row) {
                     return $row->tool->description . ' <a class="text-muted text-xs d-block" href="' . route('toolkeeper.tool.show', $row->tool_id) . '">Number: ' . $row->tool->part_number . ' </a> ';

@@ -47,6 +47,15 @@ Route::middleware(['auth', 'role:serviceman'])->prefix('serviceman')->as('servic
     Route::get('/consumable/data', [\App\Http\Controllers\Serviceman\ConsumableController::class, 'data'])->name('consumable.data');
     Route::get('/consumable/{consumable}', [\App\Http\Controllers\Serviceman\ConsumableController::class, 'show'])->name('consumable.show');
     Route::post('/consumable/{consumable}/order', [\App\Http\Controllers\Serviceman\ConsumableController::class, 'order'])->name('consumable.order');
+
+
+    Route::prefix('request')->as('request.')->group(function() {
+
+        Route::get('/tool', [\App\Http\Controllers\Serviceman\PageController::class, 'request_tool'])->name('tool.index');
+
+//        Route::get('/consumable', [\App\Http\Controllers\Serviceman\RequestConsumableController::class, 'index'])->name('consumable.index');
+
+    });
 });
 
 Route::middleware(['auth', 'role:supervisor'])->prefix('supervisor')->as('supervisor.')->group(function() {
