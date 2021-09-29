@@ -26,7 +26,6 @@ class UserController extends Controller
         'phone_number' => 'text',
     ];
 
-
     /**
      * @throws Exception
      */
@@ -44,7 +43,7 @@ class UserController extends Controller
                             <form action="' . route('admin.user.destroy', $row) . '" method="POST" class="d-inline">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="'.csrf_token().'" />
-                                <a href="#" class="btn btn-sm btn-danger ' . ( $row->role !== 'MECHANIC' ? 'disabled' : '') . '" onclick="event.preventDefault(); deleteConfirm(this)">Delete</a>
+                                <a href="#" class="btn btn-sm btn-danger ' . ( $row->role !== 'SERVICEMAN' ? 'disabled' : '') . '" onclick="event.preventDefault(); deleteConfirm(this)">Delete</a>
                             </form>';
                 })
                 ->rawColumns(['action'])

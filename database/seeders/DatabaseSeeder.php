@@ -29,10 +29,24 @@ class DatabaseSeeder extends Seeder
             'role' => 'SUPERVISOR',
         ]);
         User::create([
-            'name' => 'Toolman',
-            'email' => 'toolman@3s.com',
+            'name' => 'Toolkeeper',
+            'email' => 'toolkeeper@3s.com',
             'password' => Hash::make('admin'),
-            'role' => 'TOOLMAN',
+            'role' => 'TOOLKEEPER',
+        ]);
+
+        User::create([
+            'name' => 'Serviceman 01',
+            'email' => 'serviceman01@3s.com',
+            'password' => Hash::make('admin'),
+            'role' => 'SERVICEMAN',
+        ]);
+
+        User::create([
+            'name' => 'Serviceman 02',
+            'email' => 'serviceman02@3s.com',
+            'password' => Hash::make('admin'),
+            'role' => 'SERVICEMAN',
         ]);
     }
 }

@@ -20,15 +20,16 @@
             <div class="card card-dark card-outline">
                 <div class="card-body">
                     <div class="mb-4">
-                        <a href="{{ route('admin.tool.create') }}" class="btn btn-outline-dark">Add Tool</a>
+                        <a href="{{ route('admin.user.create') }}" class="btn btn-outline-dark">Add User</a>
                     </div>
                     <table id="datatable" class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr class="text-center">
                                 <th width="10px">No.</th>
-                                <th>Part Number</th>
-                                <th>Description</th>
-                                <th>Status</th>
+                                <th>Salary Number</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
                                 <th style="width: 155px">Action</th>
                             </tr>
                         </thead>
@@ -61,9 +62,10 @@
                 serverSide: true,
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'part_number', name: 'part_number'},
-                    {data: 'description', name: 'description'},
-                    {data: 'equipment_status', name: 'equipment_status'},
+                    {data: 'salary_number', name: 'salary_number'},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'role', name: 'role'},
                     {data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
             });

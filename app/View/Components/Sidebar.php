@@ -32,12 +32,12 @@ class Sidebar extends Component
                     'admin.user.index' => ['Users', 'fas fa-users', 'admin.user.*'],
                 ];
                 break;
-            case 'MECHANIC':
+            case 'SERVICEMAN':
                 $menus = [
-                    'mechanic.dashboard' => ['Dashboard', 'fas fa-home'],
+                    'serviceman.dashboard' => ['Dashboard', 'fas fa-home'],
                     '',
-                    'mechanic.tool.index' => ['Tools', 'fas fa-tools', 'mechanic.tool.*'],
-                    'mechanic.consumable.index' => ['Consumable', 'fas fa-box-tissue', 'mechanic.consumable.*'],
+                    'serviceman.tool.index' => ['Tools', 'fas fa-tools', 'serviceman.tool.*'],
+                    'serviceman.consumable.index' => ['Consumable', 'fas fa-box-tissue', 'serviceman.consumable.*'],
                     'MY REQUEST'
                 ];
                 break;
@@ -46,15 +46,16 @@ class Sidebar extends Component
                     'supervisor.dashboard' => ['Dashboard', 'fas fa-home'],
                 ];
                 break;
-            case 'TOOLMAN':
+            case 'TOOLKEEPER':
                 $menus = [
-                    'toolman.dashboard' => ['Dashboard', 'fas fa-home'],
+                    'toolkeeper.dashboard' => ['Dashboard', 'fas fa-home'],
                     'MASTER DATA',
-                    'toolman.tool.index' => ['Tools', 'fas fa-tools', 'toolman.tool.*'],
-                    'toolman.consumable.index' => ['Consumables', 'fas fa-box-tissue', 'toolman.consumable.*'],
+                    'toolkeeper.tool.index' => ['Tools', 'fas fa-tools', 'toolkeeper.tool.*'],
+                    'toolkeeper.consumable.index' => ['Consumables', 'fas fa-box-tissue', 'toolkeeper.consumable.*'],
+                    'toolkeeper.user.index' => ['Servicemen', 'fas fa-users', 'toolkeeper.user.*'],
                     'REQUEST',
-                    'toolman.request.tool.index' => ['Tool Request', 'fas fa-file-alt', 'toolman.request.tool.*'],
-                    'toolman.request.consumable.index' => ['Consumable Request', 'far fa-file-alt', 'toolman.request.consumable.*'],
+                    'toolkeeper.request.tool.index' => ['Tool Request', 'fas fa-file-alt', 'toolkeeper.request.tool.*'],
+                    'toolkeeper.request.consumable.index' => ['Consumable Request', 'far fa-file-alt', 'toolkeeper.request.consumable.*'],
                 ];
                 break;
         }

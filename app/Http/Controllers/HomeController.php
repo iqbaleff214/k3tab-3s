@@ -20,8 +20,8 @@ class HomeController extends Controller
         switch (auth()->user()->role) {
             case 'ADMIN': return \redirect()->route('admin.dashboard');
             case 'SUPERVISOR': return \redirect()->route('supervisor.dashboard');
-            case 'TOOLMAN': return \redirect()->route('toolman.dashboard');
-            case 'MECHANIC': return \redirect()->route('mechanic.dashboard');
+            case 'TOOLKEEPER': return \redirect()->route('toolkeeper.dashboard');
+            case 'SERVICEMAN': return \redirect()->route('serviceman.dashboard');
             default:
                 Auth::logout();
                 return \redirect()->route('login');

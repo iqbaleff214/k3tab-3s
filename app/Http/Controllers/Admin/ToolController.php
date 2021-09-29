@@ -17,7 +17,7 @@ class ToolController extends Controller
 {
 
     private $form = [
-        'equipment_number' => 'text',
+        'part_number' => 'text',
         'tech_ident_number' => 'text',
         'business_area' => 'text',
         'maintenance_plant' => 'text',
@@ -93,7 +93,7 @@ class ToolController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'equipment_number' => ['required', 'unique:tools,equipment_number', 'integer'],
+            'part_number' => ['required', /*'unique:tools,part_number',*/],
             'description' => ['required'],
         ]);
 
@@ -159,7 +159,7 @@ class ToolController extends Controller
     public function update(Request $request, tool $tool): RedirectResponse
     {
         $request->validate([
-            'equipment_number' => ['required', Rule::unique('tools')->ignore($tool), 'integer'],
+            'part_number' => ['required', Rule::unique('tools')->ignore($tool), 'integer'],
             'description' => ['required'],
         ]);
 

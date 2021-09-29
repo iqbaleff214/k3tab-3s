@@ -15,7 +15,7 @@ class CreateToolsTable extends Migration
     {
         Schema::create('tools', function (Blueprint $table) {
             $table->id();
-            $table->integer('equipment_number')->unique();
+            $table->string('part_number')->unique();
             $table->integer('tech_ident_number')->nullable();
             $table->string('business_area')->nullable();
             $table->string('maintenance_plant')->nullable();
