@@ -60,6 +60,10 @@ Route::middleware(['auth', 'role:serviceman'])->prefix('serviceman')->as('servic
 
 Route::middleware(['auth', 'role:supervisor'])->prefix('supervisor')->as('supervisor.')->group(function() {
     Route::get('/', [\App\Http\Controllers\Supervisor\PageController::class, 'index'])->name('dashboard');
+
+    Route::resource('tool', \App\Http\Controllers\Supervisor\ToolController::class)->only(['index', 'show']);
+    Route::resource('consumable', \App\Http\Controllers\Supervisor\ConsumableController::class)->only(['index', 'show']);
+    Route::resource('user', \App\Http\Controllers\Supervisor\UserController::class)->only(['index', 'show']);
 });
 
 Route::middleware(['auth', 'role:toolkeeper'])->prefix('toolkeeper')->as('toolkeeper.')->group(function() {

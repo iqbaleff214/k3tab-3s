@@ -22,7 +22,7 @@
                         <span class="info-box-icon bg-info elevation-1"><i class="fas fa-tools"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Tools</span>
+                            <span class="info-box-text">Tools Available</span>
                             <span class="info-box-number">{{ $count['tools'] }}</span>
                         </div>
                         <!-- /.info-box-content -->
@@ -35,7 +35,7 @@
                         <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-box-tissue"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Consumables</span>
+                            <span class="info-box-text">Consumables Available</span>
                             <span class="info-box-number">{{ $count['consumables'] }}</span>
                         </div>
                         <!-- /.info-box-content -->

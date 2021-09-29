@@ -46,6 +46,10 @@ class Sidebar extends Component
             case 'SUPERVISOR':
                 $menus = [
                     'supervisor.dashboard' => ['Dashboard', 'fas fa-home'],
+                    'MASTER DATA',
+                    'supervisor.tool.index' => ['Tools', 'fas fa-tools', 'supervisor.tool.*'],
+                    'supervisor.consumable.index' => ['Consumable', 'fas fa-box-tissue', 'supervisor.consumable.*'],
+                    'supervisor.user.index' => ['Servicemen', 'fas fa-users', 'supervisor.user.*'],
                 ];
                 break;
             case 'TOOLKEEPER':

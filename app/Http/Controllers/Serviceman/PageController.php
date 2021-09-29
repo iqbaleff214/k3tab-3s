@@ -18,7 +18,7 @@ class PageController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return DataTables::of(RequestTool::whereIn('request_status', [0,1])->where('user_id', auth()->user()->id)->get())
+            return DataTables::of(RequestTool::whereIn('request_status', [0,1])->where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->get())
                 ->addIndexColumn()
                 ->addColumn('diff_for_humans', function ($row) {
                     return $row->created_at->diffForHumans();
