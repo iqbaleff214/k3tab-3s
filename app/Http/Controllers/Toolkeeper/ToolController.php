@@ -106,7 +106,7 @@ class ToolController extends Controller
     public function update(Request $request, Tool $tool): RedirectResponse
     {
         $request->validate([
-            'part_number' => ['required', Rule::unique('tools')->ignore($tool), 'integer'],
+            'part_number' => ['required'],
             'description' => ['required'],
             'equipment_status' => ['required'],
             'equipment_note' => ['required'],
