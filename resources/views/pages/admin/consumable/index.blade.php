@@ -26,7 +26,6 @@
                         <thead>
                             <tr class="text-center">
                                 <th width="10px">No.</th>
-                                <th>Consumable Number</th>
                                 <th>Description</th>
                                 <th>Quantity</th>
                                 <th>Unit</th>
@@ -62,7 +61,6 @@
                 serverSide: true,
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'consumable_number', name: 'consumable_number'},
                     {data: 'description', name: 'description'},
                     {data: 'quantity', name: 'quantity'},
                     {data: 'unit', name: 'unit'},

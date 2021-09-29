@@ -20,7 +20,7 @@
             <div class="card card-dark card-outline">
                 <div class="card-body">
                     <div class="mb-4">
-                        <a href={{ route('toolkeeper.request.consumable.index') }} type="button"
+                        <a href={{ route('serviceman.request.consumable.index') }} type="button"
                            class="btn {{ !in_array(($_GET['status'] ?? 99), [0,1,3]) ? 'bg-navy' : 'btn-outline-dark' }}">All</a>
                         <a href="?status=0" type="button"
                            class="btn {{ ($_GET['status'] ?? 99) == 0 ? 'bg-navy' : 'btn-outline-dark' }}">
@@ -39,6 +39,7 @@
                             <th>Consumable</th>
                             <th>Qty</th>
                             <th>Accepted</th>
+                            <th>Status</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -79,6 +80,7 @@
                     {data: 'consumable', name: 'consumable'},
                     {data: 'requested_quantity', name: 'requested_quantity'},
                     {data: 'accepted_quantity', name: 'accepted_quantity'},
+                    {data: 'request_status', name: 'request_status', orderable: false, searchable: false},
                 ]
             });
         });
