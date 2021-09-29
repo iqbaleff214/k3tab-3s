@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'serviceman01@3s.com',
             'password' => Hash::make('admin'),
             'role' => 'SERVICEMAN',
+            'salary_number' => '000001'
         ]);
 
         User::create([
@@ -47,6 +48,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'serviceman02@3s.com',
             'password' => Hash::make('admin'),
             'role' => 'SERVICEMAN',
+            'salary_number' => '000002'
         ]);
     }
 }
