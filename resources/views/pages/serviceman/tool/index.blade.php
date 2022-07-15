@@ -96,8 +96,8 @@
                 }).done(function (response) {
                     let card = ``;
                     response.data.forEach(e => {
-                        const STATUS = e.equipment_status === 1 ? `<span class="badge badge-success">Ready</span>` : `<span class="badge badge-danger">` + (e.equipment_status === 2 ? `Requested` : `Not Ready`) + `</span>`;
-                        const REQUEST = e.equipment_status === 1 ?
+                        const STATUS = e.equipment_status == 1 ? `<span class="badge badge-success">Ready</span>` : `<span class="badge badge-danger">` + (e.equipment_status == 2 ? `Requested` : `Not Ready`) + `</span>`;
+                        const REQUEST = e.equipment_status == 1 ?
                             `<form action="/serviceman/tool/` + e.id + `/order" method="POST" class="d-inline">@csrf<button type="button" class="btn btn-outline-dark btn-sm float-right" onclick="justConfirm(this)"> <i class="fas fa-cart-plus mr-2"></i> Request</button></form>`
                             : `<span class="float-right text-muted text-sm">` + e.equipment_note + `</span>`;
                         card += `

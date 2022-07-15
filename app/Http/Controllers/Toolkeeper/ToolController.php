@@ -51,7 +51,7 @@ class ToolController extends Controller
             return DataTables::of($data->get())
                 ->addIndexColumn()
                 ->editColumn('equipment_status', function ($row) {
-                    return $row->equipment_status === 1 ? '<span class="badge badge-success">Available</span>' : ($row->equipment_status === 2 ? '<span class="badge badge-warning">Requested</span>' : '<span class="badge badge-danger">Not Available</span>');
+                    return $row->equipment_status == 1 ? '<span class="badge badge-success">Available</span>' : ($row->equipment_status == 2 ? '<span class="badge badge-warning">Requested</span>' : '<span class="badge badge-danger">Not Available</span>');
                 })
                 ->addColumn('action', function ($row) {
                     return '<a href="' . route('toolkeeper.tool.show', $row) . '" class="btn btn-sm btn-success">Show</a>

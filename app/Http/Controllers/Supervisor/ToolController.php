@@ -45,7 +45,7 @@ class ToolController extends Controller
             return DataTables::of(Tool::all())
                 ->addIndexColumn()
                 ->editColumn('equipment_status', function($row) {
-                    return $row->equipment_status === 1 ? '<span class="badge badge-success">Available</span>' : '<span class="badge badge-danger">Not Available</span>';
+                    return $row->equipment_status == 1 ? '<span class="badge badge-success">Available</span>' : '<span class="badge badge-danger">Not Available</span>';
                 })
                 ->addColumn('action', function($row) {
                     return '<a href="' . route('supervisor.tool.show', $row) . '" class="btn btn-sm btn-success">Show</a>';

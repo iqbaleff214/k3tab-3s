@@ -56,7 +56,7 @@ class RequestConsumableController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $action = '';
-                    if ($row->request_status === 0) {
+                    if ($row->request_status == 0) {
                         $action = '<form class="d-inline" method="POST" action="' . route('toolkeeper.request.consumable.update', $row) . '">
                                         <input type="hidden" name="_method" value="PUT">
                                         <input type="hidden" name="_token" value="' . csrf_token() . '" />
@@ -71,7 +71,7 @@ class RequestConsumableController extends Controller
                                     </form>';
 
                     } else {
-                        $action = $row->request_status === 1 ? '<span class="badge badge-success">Accepted</span>' : '<span class="badge badge-danger">Rejected</span>';
+                        $action = $row->request_status == 1 ? '<span class="badge badge-success">Accepted</span>' : '<span class="badge badge-danger">Rejected</span>';
                     }
                     return $action;
                 })

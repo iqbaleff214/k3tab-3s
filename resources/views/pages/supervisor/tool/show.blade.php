@@ -34,9 +34,9 @@
                                         @if($name == 'equipment_status')
                                             <div class="row">
                                                 <div class="col">
-                                                    @if($tool->equipment_status === 1)
+                                                    @if($tool->equipment_status == 1)
                                                         <div class="badge badge-success py-2 px-4">Available</div>
-                                                    @elseif($tool->equipment_status === 2)
+                                                    @elseif($tool->equipment_status == 2)
                                                         <div class="badge badge-warning py-2 px-4">Requested</div>
                                                     @else
                                                         <div class="badge badge-danger py-2 px-4">Not Available</div>
