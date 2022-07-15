@@ -16,7 +16,7 @@ class IsRole
      */
     public function handle(Request $request, Closure $next, string $role)
     {
-        if (auth()->user()->role !== strtoupper($role)) {
+        if (auth()->user()->role != strtoupper($role)) {
             abort(403);
         }
         return $next($request);

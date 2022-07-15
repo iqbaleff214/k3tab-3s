@@ -58,7 +58,7 @@ class ToolController extends Controller
     public function data(Request $request): JsonResponse
     {
         $data = Tool::where('part_number', '!=', null);
-        if ($request->get('status') !== null) {
+        if ($request->get('status') != null) {
             $data = $data->where('equipment_status', $request->get('status'));
         }
         if ($request->get('q')) {
@@ -69,7 +69,7 @@ class ToolController extends Controller
 
     public function order(Request $request, Tool $tool)
     {
-        if ($tool->equipment_status !== 1) {
+        if ($tool->equipment_status != 1) {
             return back()->with('info', 'The equipment not available right now!');
         }
 

@@ -84,8 +84,8 @@
 
             function loadMore(page) {
                 let URL = ENDPOINT + "?page=" + page;
-                if (SEARCH !== "") URL += "&q=" + SEARCH;
-                if (STATUS !== "") URL += "&status=" + STATUS;
+                if (SEARCH != "") URL += "&q=" + SEARCH;
+                if (STATUS != "") URL += "&status=" + STATUS;
                 $.ajax({
                     url: URL,
                     datatype: "html",
