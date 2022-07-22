@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers\Toolkeeper;
 
+use App\Exports\RequestToolExport;
 use App\Http\Controllers\Controller;
 use App\Models\RequestTool;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class RequestToolController extends Controller
 {
     public function index(Request $request)
     {
+        // dd(RequestTool::selectRaw('request_tools.created_at, CASE WHEN request_tools.request_status = 0 THEN "Requested" WHEN request_tools.request_status = 1 THEN "Borrowed" WHEN request_tools.request_status = 2 THEN "Returned" WHEN request_tools.request_status = 3 THEN "Rejected" ELSE "Unknown" END as status, users.name, users.salary_number, tools.description, tools.part_number')->join('users', 'users.id', '=', 'request_tools.user_id')->join('tools', 'tools.id', '=', 'request_tools.tool_id')->oldest()->get());
         if ($request->ajax()) {
             $data = RequestTool::where('user_id', '!=', null)->orderBy('created_at', 'DESC');
             if (in_array($request->get('status'), [0,1,2,3]))
@@ -125,6 +129,20 @@ class RequestToolController extends Controller
 
             return back()->with('success', $message);
         } catch (\Exception $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+    }
+
+    public function export(Request $request)
+    {
+        try {
+            $since = $request->get('tool-request-report-since');
+            $until = $request->get('tool-request-report-until');
+            $filename = time() . '_' . $since . '_-_' . $until . '-request-tool-report.xlsx';
+
+            return Excel::download(new RequestToolExport(Carbon::parse($since), Carbon::parse($until)->addDay()), $filename);
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
             return back()->with('error', $exception->getMessage());
         }
     }

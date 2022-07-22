@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\RequestToolExport;
 use App\Http\Controllers\Controller;
 use App\Imports\ToolsImport;
 use App\Models\Tool;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -115,6 +117,20 @@ class ToolController extends Controller
             Excel::import(new ToolsImport(), \request()->file('file'));
             return redirect()->route('admin.tool.index')->with('success', 'Successfully imported equipments!');
         } catch (Exception $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+    }
+
+    public function export(Request $request)
+    {
+        try {
+            $since = $request->get('tool-request-report-since');
+            $until = $request->get('tool-request-report-until');
+            $filename = time() . '_' . $since . '_-_' . $until . '-request-tool-report.xlsx';
+
+            return Excel::download(new RequestToolExport(Carbon::parse($since), Carbon::parse($until)->addDay()), $filename);
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
             return back()->with('error', $exception->getMessage());
         }
     }

@@ -36,11 +36,14 @@ Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->nam
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(function() {
     Route::get('/', [\App\Http\Controllers\Admin\PageController::class, 'index'])->name('dashboard');
+    Route::post('/truncate', [\App\Http\Controllers\Admin\PageController::class, 'truncate'])->name('truncate');
 
     Route::resource('tool', \App\Http\Controllers\Admin\ToolController::class);
+    Route::post('/tool/export', [\App\Http\Controllers\Admin\ToolController::class, 'export'])->name('tool.export');
     Route::post('tool/import', [\App\Http\Controllers\Admin\ToolController::class, 'import'])->name('tool.import');
 
     Route::resource('consumable', \App\Http\Controllers\Admin\ConsumableController::class);
+    Route::post('consumable/export', [\App\Http\Controllers\Admin\ConsumableController::class, 'export'])->name('consumable.export');
     Route::post('consumable/import', [\App\Http\Controllers\Admin\ConsumableController::class, 'import'])->name('consumable.import');
 
     Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
@@ -88,9 +91,11 @@ Route::middleware(['auth', 'role:toolkeeper'])->prefix('toolkeeper')->as('toolke
     Route::prefix('request')->as('request.')->group(function() {
 
         Route::get('/tool', [\App\Http\Controllers\Toolkeeper\RequestToolController::class, 'index'])->name('tool.index');
+        Route::post('/tool/export', [\App\Http\Controllers\Toolkeeper\RequestToolController::class, 'export'])->name('tool.export');
         Route::put('/tool/{tool}', [\App\Http\Controllers\Toolkeeper\RequestToolController::class, 'update'])->name('tool.update');
 
         Route::get('/consumable', [\App\Http\Controllers\Toolkeeper\RequestConsumableController::class, 'index'])->name('consumable.index');
+        Route::post('/consumable/export', [\App\Http\Controllers\Toolkeeper\RequestConsumableController::class, 'export'])->name('consumable.export');
         Route::put('/consumable/{consumable}', [\App\Http\Controllers\Toolkeeper\RequestConsumableController::class, 'update'])->name('consumable.update');
 
     });
