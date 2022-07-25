@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Supervisor;
 
+use App\Exports\RequestConsumableExport;
 use App\Http\Controllers\Controller;
 use App\Models\Consumable;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class ConsumableController extends Controller
@@ -50,5 +53,19 @@ class ConsumableController extends Controller
             'forms' => $this->form,
             'consumable' => $consumable
         ]);
+    }
+
+    public function export(Request $request)
+    {
+        try {
+            $since = $request->get('consumable-request-report-since');
+            $until = $request->get('consumable-request-report-until');
+            $filename = time() . '_' . $since . '_-_' . $until . '-request-consumable-report.xlsx';
+
+            return Excel::download(new RequestConsumableExport(Carbon::parse($since), Carbon::parse($until)->addDay()), $filename);
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
+            return back()->with('error', $exception->getMessage());
+        }
     }
 }

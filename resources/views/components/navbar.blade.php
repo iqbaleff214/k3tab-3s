@@ -23,10 +23,10 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                @if (in_array(Auth::user()->role, ['ADMIN', 'SUPERVISOR']))
-                <form id="truncate-form" action="{{ route('admin.truncate') }}" method="POST" class="d-hidden-mini">
+                @if (in_array(Auth::user()->role, ['ADMIN', 'SUPERVISOR', 'TOOLKEEPER']))
+                <form id="truncate-form" action="{{ route('truncate') }}" method="POST" class="d-hidden-mini">
                     @csrf
-                    <a class="dropdown-item" href="{{ route('admin.truncate') }}"
+                    <a class="dropdown-item" href="{{ route('truncate') }}"
                         onclick="event.preventDefault();justConfirm(this)">
                         Reset Data
                     </a>

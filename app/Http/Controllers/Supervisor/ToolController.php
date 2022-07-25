@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Supervisor;
 
+use App\Exports\RequestToolExport;
 use App\Http\Controllers\Controller;
 use App\Models\Tool;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class ToolController extends Controller
@@ -71,5 +75,19 @@ class ToolController extends Controller
             'forms' => $this->form,
             'tool' => $tool
         ]);
+    }
+
+    public function export(Request $request)
+    {
+        try {
+            $since = $request->get('tool-request-report-since');
+            $until = $request->get('tool-request-report-until');
+            $filename = time() . '_' . $since . '_-_' . $until . '-request-tool-report.xlsx';
+
+            return Excel::download(new RequestToolExport(Carbon::parse($since), Carbon::parse($until)->addDay()), $filename);
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
+            return back()->with('error', $exception->getMessage());
+        }
     }
 }

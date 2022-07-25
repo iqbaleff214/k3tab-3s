@@ -33,10 +33,10 @@ Route::get('short/serviceman', function() {
 Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::post('/truncate', [\App\Http\Controllers\Admin\PageController::class, 'truncate'])->name('truncate');
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(function() {
     Route::get('/', [\App\Http\Controllers\Admin\PageController::class, 'index'])->name('dashboard');
-    Route::post('/truncate', [\App\Http\Controllers\Admin\PageController::class, 'truncate'])->name('truncate');
 
     Route::resource('tool', \App\Http\Controllers\Admin\ToolController::class);
     Route::post('/tool/export', [\App\Http\Controllers\Admin\ToolController::class, 'export'])->name('tool.export');
@@ -76,7 +76,9 @@ Route::middleware(['auth', 'role:serviceman'])->prefix('serviceman')->as('servic
 Route::middleware(['auth', 'role:supervisor'])->prefix('supervisor')->as('supervisor.')->group(function() {
     Route::get('/', [\App\Http\Controllers\Supervisor\PageController::class, 'index'])->name('dashboard');
 
+    Route::post('/tool/export', [\App\Http\Controllers\Supervisor\ToolController::class, 'export'])->name('tool.export');
     Route::resource('tool', \App\Http\Controllers\Supervisor\ToolController::class)->only(['index', 'show']);
+    Route::post('consumable/export', [\App\Http\Controllers\Supervisor\ConsumableController::class, 'export'])->name('consumable.export');
     Route::resource('consumable', \App\Http\Controllers\Supervisor\ConsumableController::class)->only(['index', 'show']);
     Route::resource('user', \App\Http\Controllers\Supervisor\UserController::class)->only(['index', 'show']);
 });
