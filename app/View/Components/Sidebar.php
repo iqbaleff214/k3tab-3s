@@ -26,6 +26,7 @@ class Sidebar extends Component
             case 'ADMIN':
                 $menus = [
                     'admin.dashboard' => ['Dashboard', 'fas fa-home'],
+                    'about' => ['About', 'fas fa-info-circle'],
                     'MASTER DATA',
                     'admin.tool.index' => ['Tools', 'fas fa-tools', 'admin.tool.*'],
                     'admin.consumable.index' => ['Consumables', 'fas fa-box-tissue', 'admin.consumable.*'],
@@ -35,6 +36,7 @@ class Sidebar extends Component
             case 'SERVICEMAN':
                 $menus = [
                     'serviceman.dashboard' => ['Dashboard', 'fas fa-home'],
+                    'about' => ['About', 'fas fa-info-circle'],
                     '',
                     'serviceman.tool.index' => ['Tools', 'fas fa-tools', 'serviceman.tool.*'],
                     'serviceman.consumable.index' => ['Consumable', 'fas fa-box-tissue', 'serviceman.consumable.*'],
@@ -46,6 +48,7 @@ class Sidebar extends Component
             case 'SUPERVISOR':
                 $menus = [
                     'supervisor.dashboard' => ['Dashboard', 'fas fa-home'],
+                    'about' => ['About', 'fas fa-info-circle'],
                     'MASTER DATA',
                     'supervisor.tool.index' => ['Tools', 'fas fa-tools', 'supervisor.tool.*'],
                     'supervisor.consumable.index' => ['Consumable', 'fas fa-box-tissue', 'supervisor.consumable.*'],
@@ -55,6 +58,7 @@ class Sidebar extends Component
             case 'TOOLKEEPER':
                 $menus = [
                     'toolkeeper.dashboard' => ['Dashboard', 'fas fa-home'],
+                    'about' => ['About', 'fas fa-info-circle'],
                     'MASTER DATA',
                     'toolkeeper.tool.index' => ['Tools', 'fas fa-tools', 'toolkeeper.tool.*'],
                     'toolkeeper.consumable.index' => ['Consumables', 'fas fa-box-tissue', 'toolkeeper.consumable.*'],

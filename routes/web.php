@@ -33,7 +33,7 @@ Route::get('short/serviceman', function() {
 Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::post('/truncate', [\App\Http\Controllers\Admin\PageController::class, 'truncate'])->name('truncate');
+Route::post('/truncate', [\App\Http\Controllers\Admin\PageController::class, 'truncate'])->name('truncate')->middleware('auth');
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(function() {
     Route::get('/', [\App\Http\Controllers\Admin\PageController::class, 'index'])->name('dashboard');
@@ -102,3 +102,5 @@ Route::middleware(['auth', 'role:toolkeeper'])->prefix('toolkeeper')->as('toolke
 
     });
 });
+
+Route::get('/about', [\App\Http\Controllers\HomeController::class, 'about'])->name('about')->middleware('auth');

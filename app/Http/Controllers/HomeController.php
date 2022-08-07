@@ -27,4 +27,12 @@ class HomeController extends Controller
                 return \redirect()->route('login');
         }
     }
+
+    public function about()
+    {
+        return view('pages.general.about', [
+            'title' => 'About',
+            'guide' => 'https://filebin.net/l23569zyio4yvz1n/CARA_PENGGUNAAN_3S.pdf'
+        ]);
+    }
 }
